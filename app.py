@@ -11,7 +11,10 @@ st.sidebar.title("Боковая панель настройки")
 st.markdown("Ресурс представляет собой панели визуализации для анализа комментариев на примере инстаграм-аккаунта @uo_ggkttid 📊")
 st.sidebar.markdown("Анализ комментариев инстаграм-аккаунта @uo_ggkttid")
 
-DATA_URL = ("/Users/admin/Projects/py_example/data.csv")
+#DATA_URL = ("/Users/admin/Projects/py_example/data.csv")
+DATA_URL = ("data.csv")
+
+global fig
 
 @st.cache(persist=False)
 def load_data():
