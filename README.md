@@ -12,7 +12,7 @@ pip3 install -r requirements.txt
 ```
 
 ##### Run:
-! If you have activated (during installed or whatever) libs earlier, may skip:
+! If you have activated (during installation or whatever) libs earlier, may skip:
 ```
 . ./libs/bin/activate
 ```
