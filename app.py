@@ -28,7 +28,8 @@ def load_data():
 data = load_data()
 
 st.sidebar.subheader("Показать случайный комментарий")
-random_tweet = st.sidebar.radio('Sentiment', ('positive', 'neutral', 'negative'))
+random_tweet = st.sidebar.radio('Сентименты', ('positive', 'neutral', 'negative'))
+#random_tweet = st.sidebar.radio('Сентименты', ('позитивные', 'нейтральные', 'негативные'))
 st.sidebar.markdown(data.query('airline_sentiment == @random_tweet')[["text"]].sample(n=1).iat[0,0])
 
 st.sidebar.markdown("### Количественное сравнение комментариев")
@@ -59,11 +60,11 @@ if not st.sidebar.checkbox("Скрыть", True, key='1'):
 
 
 st.sidebar.subheader("Распределение комментариев по годам")
-choice = st.sidebar.multiselect('Выбрать год', ('2020', '2021', '2019'))
+choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2019))
 if len(choice) > 0:
   choice_data = data[data.airline.isin(choice)]
   fig_choice = px.histogram(choice_data, x='airline', y='airline_sentiment', histfunc='count', color='airline_sentiment',
-  facet_col='airline_sentiment',labels={'airline_sentiment':'tweets'}, height=600, width=800)
+  facet_col='airline_sentiment',labels={'airline_sentiment':'tweets'}, height=500, width=700)
   st.plotly_chart(fig_choice)
 
 #####Before changes (original part):
