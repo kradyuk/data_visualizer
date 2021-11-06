@@ -21,36 +21,35 @@ DATA_URL = ("01_data.csv")
 @st.cache(persist=False)
 def load_data():
   data = pd.read_csv(DATA_URL, encoding='utf-8')
-  data['tweet_created'] = pd.to_datetime(data['tweet_created'])
+  data['comment_created'] = pd.to_datetime(data['comment_created'])
   return data
 
 
 data = load_data()
 
 st.sidebar.subheader("Показать случайный комментарий")
-random_tweet = st.sidebar.radio('Сентименты', ('positive', 'neutral', 'negative'))
-#random_tweet = st.sidebar.radio('Сентименты', ('позитивные', 'нейтральные', 'негативные'))
-#st.sidebar.markdown(data.query('year_sentiment == @random_tweet')[["text"]].sample(n=1).iat[0,0])
+random_comment = st.sidebar.radio('Сентименты', ('positive', 'neutral', 'negative'))
+#st.sidebar.markdown(data.query('year_sentiment == @random_comment')[["text"]].sample(n=1).iat[0,0])
 
 st.sidebar.markdown("### Количественное сравнение комментариев")
 select = st.sidebar.selectbox('Тип визуализации', ['Гистограмма', 'Круговая диаграмма'], key='1')
 # Why re-dermination of the same var here?
 sentiment_count = data['year_sentiment'].value_counts()
-sentiment_count = pd.DataFrame({'Sentiment':sentiment_count.index, 'Tweets':sentiment_count.values})
+sentiment_count = pd.DataFrame({'Sentiment':sentiment_count.index, 'Comments':sentiment_count.values})
 
 if not st.sidebar.checkbox("Скрыть", True):
   st.markdown("### Количественное сравнение комментариев")
   if select == "Гистограмма":
-    fig2 = px.bar(sentiment_count, x='Sentiment', y='Tweets', color='Tweets', height=500)
+    fig2 = px.bar(sentiment_count, x='Sentiment', y='Comments', color='Comments', height=500)
     st.plotly_chart(fig2)
   else:
-    fig1 = px.pie(sentiment_count, values='Tweets', names='Sentiment')
+    fig1 = px.pie(sentiment_count, values='Comments', names='Sentiment')
     st.plotly_chart(fig1)
 
 
 st.sidebar.subheader("Когда и откуда пользователи оставляли комментарии?")
 hour = st.sidebar.number_input("Время суток", min_value=1, max_value=24)
-modified_data = data[data['tweet_created'].dt.hour == hour]
+modified_data = data[data['comment_created'].dt.hour == hour]
 if not st.sidebar.checkbox("Скрыть", True, key='1'):
   st.markdown("### Местоположение пользователей оставивших комментарии в зависимости от времени суток")
   st.markdown("%i комментариев в период с %i:00 до %i:00" % (len(modified_data), hour, (hour+1)%24))
@@ -64,55 +63,9 @@ choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2019))
 if len(choice) > 0:
   choice_data = data[data.year.isin(choice)]
   fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment',
-  facet_col='year_sentiment',labels={'year_sentiment':'tweets'}, height=600, width=800)
+  facet_col='year_sentiment',labels={'year_sentiment':'comments'}, height=600, width=800)
   st.plotly_chart(fig_choice)
 
-#####Before changes (original part):
-#
-#@st.cache(persist=True) 
-#def plot_sentiment(airline):  
-#  df = data[data['airline']==airline] 
-#  count = df['airline_sentiment'].value_counts()  
-#  count = pd.DataFrame({'Sentiment':count.index, 'Tweets':count.values.flatten()})  
-#  return count
-#
-#st.sidebar.subheader("Breakdown airline by sentiment")
-#choice = st.sidebar.multiselect('Pick airlines', ('US Airways','United','American','Southwest','Delta','Virgin America'))
-#if len(choice) > 0:
-#    st.subheader("Breakdown airline by sentiment")
-#    breakdown_type = st.sidebar.selectbox('Visualization type', ['Pie chart', 'Bar plot', ], key='3')
-#    fig_3 = make_subplots(rows=1, cols=len(choice), subplot_titles=choice)
-#    if breakdown_type == 'Bar plot':
-#        for i in range(1):
-#            for j in range(len(choice)):
-#                fig_3.add_trace(
-#                    go.Bar(x=plot_sentiment(choice[j]).Sentiment, y=plot_sentiment(choice[j]).Tweets, showlegend=False),
-#                    row=i+1, col=j+1
-#                )
-#        fig_3.update_layout(height=600, width=800)
-#        st.plotly_chart(fig_3)
-#    else:
-#        fig_3 = make_subplots(rows=1, cols=len(choice), specs=[[{'type':'domain'}]*len(choice)], subplot_titles=choice)
-#        for i in range(1):
-#            for j in range(len(choice)):
-#                fig_3.add_trace(
-#                    go.Pie(labels=plot_sentiment(choice[j]).Sentiment, values=plot_sentiment(choice[j]).Tweets, showlegend=True),
-#                    i+1, j+1
-#                )
-#        fig_3.update_layout(height=600, width=800)
-#        st.plotly_chart(fig_3)
-#st.sidebar.subheader("Breakdown airline by sentiment")
-#choice = st.sidebar.multiselect('Pick airlines', ('US Airways','United','American','Southwest','Delta','Virgin America'), key=0)
-#if len(choice) > 0:
-#    choice_data = data[data.airline.isin(choice)]
-#    fig_0 = px.histogram(
-#                        choice_data, x='airline', y='airline_sentiment',
-#                         histfunc='count', color='airline_sentiment',
-#                         facet_col='airline_sentiment', labels={'airline_sentiment':'tweets'},
-#                          height=600, width=800)
-#    st.plotly_chart(fig_0)
-#
-###
 
 st.sidebar.header("Облако комментариев")
 word_sentiment = st.sidebar.radio('sentiment', ('positive','neutral', 'negative'))
@@ -128,3 +81,4 @@ if not st.sidebar.checkbox("Скрыть", True, key='3'):
   plt.xticks([])
   plt.yticks([])
   st.pyplot()
+

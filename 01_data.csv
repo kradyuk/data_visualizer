@@ -1,4 +1,4 @@
-"tweet_id","year_sentiment","year_sentiment_confidence","negativereason","negativereason_confidence","year","name","retweet_count","text","tweet_created","latitude","longitude"
+"comment_id","year_sentiment","year_sentiment_confidence","negativereason","negativereason_confidence","year","name","comment_count","text","comment_created","latitude","longitude"
 "570306133677761000","positive","1","","","2020","neson.anna","0","""Поздравляю! Чемпионы, удачи вам👍""","2015-02-24 11:35:52 -0800","53.68002","23.8272"
 "570301130888122000","positive","0.3486","","0","2020","neson.anna","0","❤️❤️❤️","2015-02-24 17:15:59 -0800","53.68002","23.8272"
 "570301083672814000","positive","0.6837","","","2020","n.a.t.alia_v","0","🔥🔥🔥🔥🔥","2015-02-24 16:15:48 -0800","53.68002","23.8272"
