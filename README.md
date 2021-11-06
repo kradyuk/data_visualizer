@@ -1,7 +1,7 @@
 # Data graph visualizer 
 
 ##### Requirements:
-Python 3.7.9
+Python 3.8.10
 
 ##### Prepare environment:
 

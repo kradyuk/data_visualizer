@@ -16,7 +16,7 @@ st.markdown("Ресурс представляет собой панели ви�
 st.sidebar.markdown("Анализ комментариев инстаграм-аккаунта @uo_ggkttid")
 
 #DATA_URL = ("/Users/admin/Projects/py_example/data.csv")
-DATA_URL = ("data.csv")
+DATA_URL = ("01_data.csv")
 
 @st.cache(persist=False)
 def load_data():
@@ -30,12 +30,12 @@ data = load_data()
 st.sidebar.subheader("Показать случайный комментарий")
 random_tweet = st.sidebar.radio('Сентименты', ('positive', 'neutral', 'negative'))
 #random_tweet = st.sidebar.radio('Сентименты', ('позитивные', 'нейтральные', 'негативные'))
-st.sidebar.markdown(data.query('airline_sentiment == @random_tweet')[["text"]].sample(n=1).iat[0,0])
+#st.sidebar.markdown(data.query('year_sentiment == @random_tweet')[["text"]].sample(n=1).iat[0,0])
 
 st.sidebar.markdown("### Количественное сравнение комментариев")
 select = st.sidebar.selectbox('Тип визуализации', ['Гистограмма', 'Круговая диаграмма'], key='1')
 # Why re-dermination of the same var here?
-sentiment_count = data['airline_sentiment'].value_counts()
+sentiment_count = data['year_sentiment'].value_counts()
 sentiment_count = pd.DataFrame({'Sentiment':sentiment_count.index, 'Tweets':sentiment_count.values})
 
 if not st.sidebar.checkbox("Скрыть", True):
@@ -62,9 +62,9 @@ if not st.sidebar.checkbox("Скрыть", True, key='1'):
 st.sidebar.subheader("Распределение комментариев по годам")
 choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2019))
 if len(choice) > 0:
-  choice_data = data[data.airline.isin(choice)]
-  fig_choice = px.histogram(choice_data, x='airline', y='airline_sentiment', histfunc='count', color='airline_sentiment',
-  facet_col='airline_sentiment',labels={'airline_sentiment':'tweets'}, height=500, width=700)
+  choice_data = data[data.year.isin(choice)]
+  fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment',
+  facet_col='year_sentiment',labels={'year_sentiment':'tweets'}, height=600, width=800)
   st.plotly_chart(fig_choice)
 
 #####Before changes (original part):
@@ -120,7 +120,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 if not st.sidebar.checkbox("Скрыть", True, key='3'):
   st.header('Word cloud for %s sentiment' % (word_sentiment))
-  df = data[data['airline_sentiment']==word_sentiment]
+  df = data[data['year_sentiment']==word_sentiment]
   words = ' '.join(df['text'])
   processed_words = ' '.join([word for word in words.split() if 'http' not in word and not word.startswith('@') and word != 'RT'])
   wordcloud = WordCloud(stopwords=STOPWORDS, background_color='white', height=640, width=800).generate(processed_words)
