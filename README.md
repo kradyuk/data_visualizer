@@ -12,8 +12,12 @@ pip3 install -r requirements.txt
 ```
 
 ##### Run:
+! If you have installed libs earlier may skip:
 ```
 . ./libs/bin/activate
+```
+Actual run:
+```
 streamlit run app.py
 ```
 
