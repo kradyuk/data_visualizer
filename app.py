@@ -29,7 +29,7 @@ data = load_data()
 
 st.sidebar.subheader("Показать случайный комментарий")
 random_comment = st.sidebar.radio('Сентименты', ('positive', 'neutral', 'negative'))
-#st.sidebar.markdown(data.query('year_sentiment == @random_comment')[["text"]].sample(n=1).iat[0,0])
+st.sidebar.markdown(data.query('year_sentiment == @random_comment')[["text"]].sample(n=1).iat[0,0])
 
 st.sidebar.markdown("### Количественное сравнение комментариев")
 select = st.sidebar.selectbox('Тип визуализации', ['Гистограмма', 'Круговая диаграмма'], key='1')
@@ -68,11 +68,11 @@ if len(choice) > 0:
 
 
 st.sidebar.header("Облако комментариев")
-word_sentiment = st.sidebar.radio('sentiment', ('positive','neutral', 'negative'))
+word_sentiment = st.sidebar.radio('Sentiment', ('positive','neutral', 'negative'))
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 if not st.sidebar.checkbox("Скрыть", True, key='3'):
-  st.header('Word cloud for %s sentiment' % (word_sentiment))
+  st.header('Облако комментариев - %s' % (word_sentiment))
   df = data[data['year_sentiment']==word_sentiment]
   words = ' '.join(df['text'])
   processed_words = ' '.join([word for word in words.split() if 'http' not in word and not word.startswith('@') and word != 'RT'])
