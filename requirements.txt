@@ -1,5 +1,6 @@
 numpy==1.21.2
 streamlit
-plotly==4.3.0
+#plotly==4.3.0
+plotly==4.4.1
 wordcloud
 matplotlib
