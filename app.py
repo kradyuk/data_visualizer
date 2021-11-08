@@ -58,10 +58,11 @@ if not st.sidebar.checkbox("Скрыть", True, key='1'):
     st.write(modified_data)
 
 
-st.sidebar.subheader("Распределение комментариев по годам")
+st.sidebar.subheader("Количественное сравнение комментариев по годам")
 choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2019))
 if len(choice) > 0:
   choice_data = data[data.year.isin(choice)]
+  st.markdown("### Количественное сравнение комментариев по годам")
   fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment',
   facet_col='year_sentiment',labels={'year_sentiment':'comments'}, height=600, width=800)
   st.plotly_chart(fig_choice)
@@ -72,7 +73,7 @@ word_sentiment = st.sidebar.radio('Sentiment', ('positive','neutral', 'negative'
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 if not st.sidebar.checkbox("Скрыть", True, key='3'):
-  st.header('Облако комментариев - %s' % (word_sentiment))
+  st.markdown("### Облако комментариев - %s" % (word_sentiment))
   df = data[data['year_sentiment']==word_sentiment]
   words = ' '.join(df['text'])
   processed_words = ' '.join([word for word in words.split() if 'http' not in word and not word.startswith('@') and word != 'RT'])
