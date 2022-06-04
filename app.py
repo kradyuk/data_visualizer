@@ -59,11 +59,21 @@ if not st.sidebar.checkbox("Скрыть", True, key='1'):
 
 
 st.sidebar.subheader("Количественное сравнение комментариев по годам")
-choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2019))
+choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2022, 2019))
 if len(choice) > 0:
   choice_data = data[data.year.isin(choice)]
   st.markdown("### Количественное сравнение комментариев по годам")
   fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment',
+  facet_col='year_sentiment',labels={'year_sentiment':'comments'}, height=600, width=800)
+  st.plotly_chart(fig_choice)
+
+### td
+st.sidebar.subheader("Количественное сравнение публикаций по годам")
+choice = st.sidebar.multiselect('Выбрать год публикаций', (2020, 2021, 2022, 2019))
+if len(choice) > 0:
+  choice_data = data[data.year.isin(choice)]
+  st.markdown("### Количественное сравнение публикаций по годам")
+  fig_choice = px.histogram(data, x='publish_year', y='publish_count', histfunc='count', color='year_sentiment',
   facet_col='year_sentiment',labels={'year_sentiment':'comments'}, height=600, width=800)
   st.plotly_chart(fig_choice)
 
