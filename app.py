@@ -16,7 +16,8 @@ st.markdown("Ресурс представляет собой панели ви�
 st.sidebar.markdown("Анализ комментариев инстаграм-аккаунта @uo_ggkttid")
 
 #DATA_URL = ("/Users/admin/Projects/py_example/data.csv")
-DATA_URL = ("01_data.csv")
+DATA_URL  = ("01_sample_newest.csv") #("01_data.csv")
+DATA_URL2 = ("02_data.csv")
 
 @st.cache(persist=False)
 def load_data():
@@ -24,8 +25,8 @@ def load_data():
   data['comment_created'] = pd.to_datetime(data['comment_created'])
   return data
 
-
-data = load_data()
+data  = load_data()
+data2 = pd.read_csv(DATA_URL2, encoding='utf-8')
 
 st.sidebar.subheader("Показать случайный комментарий")
 random_comment = st.sidebar.radio('Сентименты', ('positive', 'neutral', 'negative'))
@@ -71,10 +72,10 @@ if len(choice) > 0:
 st.sidebar.subheader("Количественное сравнение публикаций по годам")
 choice = st.sidebar.multiselect('Выбрать год публикаций', (2020, 2021, 2022, 2019))
 if len(choice) > 0:
-  choice_data = data[data.year.isin(choice)]
+  choice_data = data2[data2.publish_year.isin(choice)]
   st.markdown("### Количественное сравнение публикаций по годам")
-  fig_choice = px.histogram(data, x='publish_year', y='publish_count', histfunc='count', color='year_sentiment',
-  facet_col='year_sentiment',labels={'year_sentiment':'comments'}, height=600, width=800)
+  fig_choice = px.histogram(data2, x='publish_count', y='publish_year', histfunc='count', color='publish_count',
+  facet_col='publish_year',labels={'publish_year':'publish_count'}, height=600, width=800)
   st.plotly_chart(fig_choice)
 
 
