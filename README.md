@@ -21,3 +21,6 @@ Actual run:
 streamlit run app.py
 ```
 
+##### Docs:
+https://towardsdatascience.com/histograms-with-plotly-express-complete-guide-d483656c5ad7#00d1
+https://towardsdatascience.com/streamlit-vs-dash-vs-shiny-vs-voila-vs-flask-vs-jupyter-24739ab5d569
