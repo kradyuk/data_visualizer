@@ -4,3 +4,4 @@ streamlit
 plotly==4.4.1
 wordcloud
 matplotlib
+pandas

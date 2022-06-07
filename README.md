@@ -18,7 +18,7 @@ pip3 install -r requirements.txt
 ```
 Actual run:
 ```
-streamlit run app.py
+streamlit run visualizer.py
 ```
 
 ##### Docs:

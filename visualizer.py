@@ -15,8 +15,6 @@ st.sidebar.title("Боковая панель настройки")
 st.markdown("Ресурс представляет собой панели визуализации для анализа комментариев на примере инстаграм-аккаунта @uo_ggkttid 📊")
 st.sidebar.markdown("Анализ комментариев инстаграм-аккаунта @uo_ggkttid")
 
-#DATA_URL = ("/Users/admin/Projects/py_example/data.csv")
-#DATA_URL  = ("../data01_sample_newest.csv")
 DATA_URL  = ("../data_analyzer/files/final.csv")
 DATA_URL2 = ("02_data.csv")
 
@@ -60,32 +58,30 @@ if not st.sidebar.checkbox("Скрыть", True, key='1'):
     st.write(modified_data)
 
 
-st.sidebar.subheader("Количественное сравнение комментариев по годам")
-choice = st.sidebar.multiselect('Выбрать год', (2020, 2021, 2022, 2019))
+st.sidebar.subheader("Количественное сравнение комментариев по positive/negative/neutral")
+choice = st.sidebar.multiselect('Выбрать год', (2019, 2020, 2021, 2022))
 if len(choice) > 0:
   choice_data = data[data.year.isin(choice)]
-  st.markdown("### Количественное сравнение комментариев по годам")
-  fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment',
-  facet_col='year_sentiment', height=600, width=800)
+  st.markdown("### Количественное сравнение комментариев по positive/negative/neutral")
+  fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment', facet_col='year_sentiment', barmode='group')
   st.plotly_chart(fig_choice)
 
-# td
-#st.sidebar.subheader("Количественное сравнение комментариев по пользователям")
-#choice = st.sidebar.multiselect('Выбрать пользователя', (2020, 2021, 2022, 2019))
-#if len(choice) > 0:
-#  choice_data = data[data.year.isin(choice)]
-#  st.markdown("### Количественное сравнение комментариев по годам")
-#  fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment',
-#  facet_col='year_sentiment',labels={'year_sentiment':'comments'}, height=600, width=800)
-#  st.plotly_chart(fig_choice)
+# td bar chart 
+st.sidebar.subheader("Количественное сравнение комментариев на пользователя")
+choice = st.sidebar.multiselect('Выбрать года', (2019, 2020, 2021, 2022))
+if len(choice) > 0:
+  choice_data = data[data.year.isin(choice)]
+  st.markdown("### Количество комментариев на пользователя")
+  fig_choice = px.bar(choice_data, x='name', y='comment_count', text='comment_count')
+  st.plotly_chart(fig_choice)
 
+# td publishes
 st.sidebar.subheader("Количественное сравнение публикаций по годам")
-choice = st.sidebar.multiselect('Выбрать год публикаций', (2020, 2021, 2022, 2019))
+choice = st.sidebar.multiselect('Выбрать год публикаций', data2.publish_year.items())
 if len(choice) > 0:
   choice_data = data2[data2.publish_year.isin(choice)]
   st.markdown("### Количественное сравнение публикаций по годам")
-  fig_choice = px.histogram(data2, x='publish_year', y='publishes', histfunc='count', color='publishes',
-  facet_col='publish_year', height=600, width=800)
+  fig_choice = px.histogram(data2, x='publish_year', y='publishes', histfunc='max', color='publish_year') #, barmode='group')
   st.plotly_chart(fig_choice)
 
 
