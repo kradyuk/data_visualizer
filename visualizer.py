@@ -58,11 +58,11 @@ if not st.sidebar.checkbox("Скрыть", True, key='1'):
     st.write(modified_data)
 
 
-st.sidebar.subheader("Количественное сравнение комментариев по positive/negative/neutral")
+st.sidebar.subheader("Количественное сравнение комментариев по сентиментам")
 choice = st.sidebar.multiselect('Выбрать год', (2019, 2020, 2021, 2022))
 if len(choice) > 0:
   choice_data = data[data.year.isin(choice)]
-  st.markdown("### Количественное сравнение комментариев по positive/negative/neutral")
+  st.markdown("### Количественное сравнение комментариев по сентиментам")
   fig_choice = px.histogram(choice_data, x='year', y='year_sentiment', histfunc='count', color='year_sentiment', facet_col='year_sentiment', barmode='group')
   st.plotly_chart(fig_choice)
 
