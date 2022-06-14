@@ -80,12 +80,11 @@ if len(choice) > 0:
 
 st.sidebar.subheader("Количественное сравнение публикаций по годам")
 choice = st.sidebar.multiselect('Выбрать год публикаций', data2.publish_year.items())
-if not st.sidebar.checkbox("Скрыть", True, key='6'):
-  if len(choice) > 0:
-    choice_data = data2[data2.publish_year.isin(choice)]
-    st.markdown("### Количественное сравнение публикаций по годам")
-    fig_choice = px.histogram(data2, x='publish_year', y='publishes', histfunc='max', color='publish_year') #, barmode='group')
-    st.plotly_chart(fig_choice)
+if len(choice) > 0:
+  choice_data = data2[data2.publish_year.isin(choice)]
+  st.markdown("### Количественное сравнение публикаций по годам")
+  fig_choice = px.histogram(data2, x='publish_year', y='publishes', histfunc='max', color='publish_year') #, barmode='group')
+  st.plotly_chart(fig_choice)
 
 
 st.sidebar.header("Облако комментариев")
