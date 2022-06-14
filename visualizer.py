@@ -79,7 +79,7 @@ if len(choice) > 0:
 
 
 st.sidebar.subheader("Количественное сравнение публикаций по годам")
-choice = st.sidebar.multiselect('Выбрать год публикаций', data2.publish_year.items())
+choice = st.sidebar.multiselect('Выбрать год публикаций', (2019, 2020, 2021, 2022))
 if len(choice) > 0:
   choice_data = data2[data2.publish_year.isin(choice)]
   st.markdown("### Количественное сравнение публикаций по годам")
